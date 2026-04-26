@@ -421,22 +421,6 @@ END:VCALENDAR`;
                     });
 
                     setSubmitted(true);
-                    setTimeout(() => {
-                        setFormData({
-                            firstName: '',
-                            lastName: '',
-                            spouseFirstName: '',
-                            spouseLastName: '',
-                            phoneNumber: '',
-                            textUpdates: true,
-                            address: '',
-                            addressLine2: '',
-                            city: '',
-                            state: '',
-                            zipCode: '',
-                        });
-                        setSubmitted(false);
-                    }, 5000);
                 } catch (err) {
                     setError('Something went wrong. Please try again.');
                     console.error(err);
