@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christina and Austin - Save the Date</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            color: #3a3a3a;
+        }
+
+        .page-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fafaf8 0%, #f5f1ed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .form-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            width: 100%;
+            padding: 60px 50px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px;
+            font-weight: 600;
+            color: #2a2a2a;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .wedding-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: #b8a89f;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #8a8a8a;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .form-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #2a2a2a;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #3a3a3a;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input {
+            padding: 12px 16px;
+            border: 1px solid #e0dcd8;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: 'Lora', serif;
+            color: #3a3a3a;
+            background: #fafaf8;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #b8a89f;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(184, 168, 159, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #c0bab4;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row.three {
+            grid-template-columns: 1fr 0.7fr 0.8fr;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .form-row.three {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0dcd8;
+            margin: 20px 0;
+        }
+
+        .optional-label {
+            font-size: 13px;
+            color: #8a8a8a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #b8a89f;
+            flex-shrink: 0;
+        }
+
+        .checkbox-group label {
+            font-size: 15px;
+            color: #3a3a3a;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        .submit-button {
+            background: #3a3a3a;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-family: 'Lora', serif;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-button:hover:not(:disabled) {
+            background: #5a5a5a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: #ffe0e0;
+            color: #c41e3a;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .success-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .success-content {
+            text-align: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: #d4edda;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #155724;
+        }
+
+        .success-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            color: #2a2a2a;
+            margin-bottom: 12px;
+        }
+
+        .success-content p {
+            font-size: 18px;
+            color: #8a8a8a;
+            line-height: 1.6;
+        }
+
+        .calendar-section {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #e0dcd8;
+        }
+
+        .calendar-prompt {
+            font-size: 16px;
+            color: #3a3a3a;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .calendar-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .calendar-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border: 2px solid #e0dcd8;
+            border-radius: 8px;
+            background: white;
+            font-size: 15px;
+            font-family: 'Lora', serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #3a3a3a;
+        }
+
+        .calendar-button:hover {
+            border-color: #b8a89f;
+            background: #fafaf8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .form-wrapper {
+                padding: 40px 25px;
+            }
+            .header h1 {
+                font-size: 42px;
+            }
+            .form-section h3 {
+                font-size: 24px;
+            }
+            .calendar-buttons {
+                flex-direction: column;
+            }
+            .calendar-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function WeddingSaveTheDate() {
+            const [formData, setFormData] = useState({
+                firstName: '',
+                lastName: '',
+                spouseFirstName: '',
+                spouseLastName: '',
+                phoneNumber: '',
+                textUpdates: true,
+                address: '',
+                addressLine2: '',
+                city: '',
+                state: '',
+                zipCode: '',
+            });
+
+            const [submitted, setSubmitted] = useState(false);
+            const [loading, setLoading] = useState(false);
+            const [error, setError] = useState('');
+
+            const handleAddToGoogleCalendar = () => {
+                const startDate = '20270515';
+                const endDate = '20270516';
+                const title = 'Christina & Austin\'s Wedding';
+                const details = 'Join us for our wedding celebration!';
+                const url = `https://calendar.google.com/calendar/u/0/r/eventedit?text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(details)}`;
+                window.open(url, '_blank');
+            };
+
+            const handleAddToAppleCalendar = () => {
+                const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Wedding//Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:christina-austin-wedding-2027@wedding.com
+DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+DTSTART:20270515
+DTEND:20270516
+SUMMARY:Christina & Austin's Wedding
+DESCRIPTION:Join us for our wedding celebration!
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+END:VCALENDAR`;
+                
+                const blob = new Blob([icsContent], { type: 'text/calendar' });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'christina-austin-wedding.ics');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+
+            const handleChange = (e) => {
+                const { name, value, type, checked } = e.target;
+                setFormData(prev => ({
+                    ...prev,
+                    [name]: type === 'checkbox' ? checked : value
+                }));
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                setError('');
+
+                try {
+                    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1eXsG3ZDz-PEJUWFpbuLpfpD0vOiOCIPn15L1T_SgrJsod8C0VMipyB2BX1u-Mfe2yg/exec';
+
+                    const response = await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
+
+                    setSubmitted(true);
+                    setTimeout(() => {
+                        setFormData({
+                            firstName: '',
+                            lastName: '',
+                            spouseFirstName: '',
+                            spouseLastName: '',
+                            phoneNumber: '',
+                            textUpdates: true,
+                            address: '',
+                            addressLine2: '',
+                            city: '',
+                            state: '',
+                            zipCode: '',
+                        });
+                        setSubmitted(false);
+                    }, 5000);
+                } catch (err) {
+                    setError('Something went wrong. Please try again.');
+                    console.error(err);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            if (submitted) {
+                return (
+                    <div className="page-container">
+                        <div className="success-container">
+                            <div className="success-content">
+                                <div className="checkmark">✓</div>
+                                <h2>Thank You!</h2>
+                                <p>We've received your information and can't wait to celebrate with you.</p>
+                                
+                                <div className="calendar-section">
+                                    <p className="calendar-prompt">Add the date to your calendar:</p>
+                                    <div className="calendar-buttons">
+                                        <button 
+                                            className="calendar-button"
+                                            onClick={handleAddToGoogleCalendar}
+                                        >
+                                            📅 Google Calendar
+                                        </button>
+                                        <button 
+                                            className="calendar-button"
+                                            onClick={handleAddToAppleCalendar}
+                                        >
+                                            📱 Apple Calendar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="page-container">
+                    <div className="form-wrapper">
+                        <div className="header">
+                            <h1>Christina and Austin</h1>
+                            <p className="wedding-date">May 15, 2027</p>
+                            <p className="subtitle">Enter your information to receive important announcements</p>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="form">
+                            {error && <div className="error-message">{error}</div>}
+
+                            <div className="form-section">
+                                <h3>Guest Information</h3>
+                                
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>First Name *</label>
+                                        <input
+                                            type="text"
+                                            name="firstName"
+                                            value={formData.firstName}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="John"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Last Name *</label>
+                                        <input
+                                            type="text"
+                                            name="lastName"
+                                            value={formData.lastName}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="Smith"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="divider"></div>
+
+                                <p className="optional-label">Spouse or Plus One (Optional)</p>
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>First Name</label>
+                                        <input
+                                            type="text"
+                                            name="spouseFirstName"
+                                            value={formData.spouseFirstName}
+                                            onChange={handleChange}
+                                            placeholder="Jane"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Last Name</label>
+                                        <input
+                                            type="text"
+                                            name="spouseLastName"
+                                            value={formData.spouseLastName}
+                                            onChange={handleChange}
+                                            placeholder="Smith"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-section">
+                                <h3>Contact Information</h3>
+
+                                <div className="form-group">
+                                    <label>Phone Number *</label>
+                                    <input
+                                        type="tel"
+                                        name="phoneNumber"
+                                        value={formData.phoneNumber}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="(555) 123-4567"
+                                    />
+                                </div>
+
+                                <div className="checkbox-group">
+                                    <input
+                                        type="checkbox"
+                                        name="textUpdates"
+                                        checked={formData.textUpdates}
+                                        onChange={handleChange}
+                                    />
+                                    <label>
+                                        I want to receive important text updates regarding this event
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="form-section">
+                                <h3>Mailing Address</h3>
+
+                                <div className="form-group">
+                                    <label>Street Address *</label>
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        value={formData.address}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="123 Main Street"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Apt, Suite, etc. (Optional)</label>
+                                    <input
+                                        type="text"
+                                        name="addressLine2"
+                                        value={formData.addressLine2}
+                                        onChange={handleChange}
+                                        placeholder="Apartment 4B"
+                                    />
+                                </div>
+
+                                <div className="form-row three">
+                                    <div className="form-group">
+                                        <label>City *</label>
+                                        <input
+                                            type="text"
+                                            name="city"
+                                            value={formData.city}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="New York"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>State *</label>
+                                        <input
+                                            type="text"
+                                            name="state"
+                                            value={formData.state}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="NY"
+                                            maxLength="2"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>ZIP Code *</label>
+                                        <input
+                                            type="text"
+                                            name="zipCode"
+                                            value={formData.zipCode}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="10001"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button 
+                                type="submit" 
+                                className="submit-button"
+                                disabled={loading}
+                            >
+                                {loading ? 'Submitting...' : 'Submit'}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<WeddingSaveTheDate />, document.getElementById('root'));
+    </script>
+</body>
+</html>
