@@ -137,7 +137,7 @@
         }
 
         .form-row.three {
-            grid-template-columns: 1fr 0.7fr 0.8fr;
+            grid-template-columns: 1.2fr 0.6fr 0.7fr;
         }
 
         @media (max-width: 600px) {
@@ -436,25 +436,7 @@ END:VCALENDAR`;
                             <div className="success-content">
                                 <div className="checkmark">✓</div>
                                 <h2>Thank You!</h2>
-                                <p>We've received your information and can't wait to celebrate with you.</p>
-                                
-                                <div className="calendar-section">
-                                    <p className="calendar-prompt">Add the date to your calendar:</p>
-                                    <div className="calendar-buttons">
-                                        <button 
-                                            className="calendar-button"
-                                            onClick={handleAddToGoogleCalendar}
-                                        >
-                                            📅 Google Calendar
-                                        </button>
-                                        <button 
-                                            className="calendar-button"
-                                            onClick={handleAddToAppleCalendar}
-                                        >
-                                            📱 Apple Calendar
-                                        </button>
-                                    </div>
-                                </div>
+                                <p>We've received your information. Be on the lookout for a letter in the mail</p>
                             </div>
                         </div>
                     </div>
@@ -465,9 +447,9 @@ END:VCALENDAR`;
                 <div className="page-container">
                     <div className="form-wrapper">
                         <div className="header">
-                            <h1>Christina and Austin</h1>
-                            <p className="wedding-date">May 15, 2027</p>
-                            <p className="subtitle">Enter your information to receive important announcements</p>
+                            <h1>Luke Gentri</h1>
+                            <p className="wedding-date">wants you to send a thank you</p>
+                            <p className="subtitle">enter your information to receive a thank you</p>
                         </div>
 
                         <form onSubmit={handleSubmit} className="form">
@@ -499,60 +481,6 @@ END:VCALENDAR`;
                                             placeholder="Smith"
                                         />
                                     </div>
-                                </div>
-
-                                <div className="divider"></div>
-
-                                <p className="optional-label">Spouse (Optional)</p>
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label>First Name</label>
-                                        <input
-                                            type="text"
-                                            name="spouseFirstName"
-                                            value={formData.spouseFirstName}
-                                            onChange={handleChange}
-                                            placeholder="Jane"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Last Name</label>
-                                        <input
-                                            type="text"
-                                            name="spouseLastName"
-                                            value={formData.spouseLastName}
-                                            onChange={handleChange}
-                                            placeholder="Smith"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="form-section">
-                                <h3>Contact Information</h3>
-
-                                <div className="form-group">
-                                    <label>Phone Number *</label>
-                                    <input
-                                        type="tel"
-                                        name="phoneNumber"
-                                        value={formData.phoneNumber}
-                                        onChange={handleChange}
-                                        required
-                                        placeholder="(555) 123-4567"
-                                    />
-                                </div>
-
-                                <div className="checkbox-group">
-                                    <input
-                                        type="checkbox"
-                                        name="textUpdates"
-                                        checked={formData.textUpdates}
-                                        onChange={handleChange}
-                                    />
-                                    <label>
-                                        I want to receive important text updates regarding this event
-                                    </label>
                                 </div>
                             </div>
 
